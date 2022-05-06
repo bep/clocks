@@ -1,4 +1,4 @@
-module github.com/bep/go-lib-template
+module github.com/bep/clock
 
 go 1.18
 
