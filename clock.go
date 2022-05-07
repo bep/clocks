@@ -36,12 +36,13 @@ func (c *clock) Since(t time.Time) time.Duration {
 // Until returns the duration until t.
 func (c *clock) Until(t time.Time) time.Duration {
 	return t.Sub(c.Now())
-
 }
+
+var goClock = &systemClock{}
 
 // SystemClock is a Clock that uses the system clock, meaning it just delegates to time.Now() etc.
 func System() Clock {
-	return &systemClock{}
+	return goClock
 }
 
 type systemClock struct {
