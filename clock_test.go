@@ -41,6 +41,14 @@ func TestClock(t *testing.T) {
 		c.Assert(toString(clock.Now()), qt.Equals, "2053-10-11-02:50:04")
 	})
 
+	c.Run("Offset", func(c *qt.C) {
+		c.Parallel()
+
+		clock := Start(time.Now().Add(5010 * time.Millisecond))
+		c.Assert(clock.Offset(), durationEq, time.Duration(5*time.Second))
+
+	})
+
 	c.Run("Since", func(c *qt.C) {
 		c.Parallel()
 
@@ -68,6 +76,7 @@ func TestSystemClock(t *testing.T) {
 	c.Assert(toString(System().Now()), qt.Equals, toString(time.Now()))
 	c.Assert(System().Since(time.Now().Add(-10*time.Hour)), durationEq, time.Since(time.Now().Add(-10*time.Hour)))
 	c.Assert(System().Until(time.Now().Add(10*time.Hour)), durationEq, time.Until(time.Now().Add(10*time.Hour)))
+	c.Assert(System().Offset(), qt.Equals, time.Duration(0))
 
 }
 

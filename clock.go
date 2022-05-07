@@ -9,6 +9,9 @@ type Clock interface {
 	Now() time.Time
 	Since(t time.Time) time.Duration
 	Until(t time.Time) time.Duration
+
+	// Offset returns the offset of this clock relative to the system clock.
+	Offset() time.Duration
 }
 
 // Start creates a new Clock starting at t.
@@ -38,9 +41,15 @@ func (c *clock) Until(t time.Time) time.Duration {
 	return t.Sub(c.Now())
 }
 
+// Offset returns the offset of this clock relative to the system clock.
+// This can be used to convert to/from system time.
+func (c *clock) Offset() time.Duration {
+	return c.offset
+}
+
 var goClock = &systemClock{}
 
-// SystemClock is a Clock that uses the system clock, meaning it just delegates to time.Now() etc.
+// System is a Clock that uses the system clock, meaning it just delegates to time.Now() etc.
 func System() Clock {
 	return goClock
 }
@@ -58,4 +67,8 @@ func (c *systemClock) Since(t time.Time) time.Duration {
 
 func (c *systemClock) Until(t time.Time) time.Duration {
 	return time.Until(t)
+}
+
+func (c *systemClock) Offset() time.Duration {
+	return 0
 }

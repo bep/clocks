@@ -2,7 +2,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/bep/clock)](https://goreportcard.com/report/github.com/bep/clock)
 [![GoDoc](https://godoc.org/github.com/bep/clock?status.svg)](https://godoc.org/github.com/bep/clock)
 
-This package provides a _ticking clock_ that allows you to set the start time.
+This package provides a _ticking clock_ that allows you to set the start time. It also provides a system clock, both implementing this interface:
 
 ```go
 // Clock provides the sub set of methods in time.Time that this package provides.
@@ -10,6 +10,9 @@ type Clock interface {
 	Now() time.Time
 	Since(t time.Time) time.Duration
 	Until(t time.Time) time.Duration
+
+	// Offset returns the offset of this clock relative to the system clock.
+	Offset() time.Duration
 }
 ```
 
