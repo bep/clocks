@@ -1,3 +1,16 @@
 [![Tests on Linux, MacOS and Windows](https://github.com/bep/clock/workflows/Test/badge.svg)](https://github.com/bep/clock/actions?query=workflow:Test)
 [![Go Report Card](https://goreportcard.com/badge/github.com/bep/clock)](https://goreportcard.com/report/github.com/bep/clock)
 [![GoDoc](https://godoc.org/github.com/bep/clock?status.svg)](https://godoc.org/github.com/bep/clock)
+
+This package provides a _ticking clock_ that allows you to set the start time.
+
+```go
+// Clock provides the sub set of methods in time.Time that this package provides.
+type Clock interface {
+	Now() time.Time
+	Since(t time.Time) time.Duration
+	Until(t time.Time) time.Duration
+}
+```
+
+Note that this only support a subset of all the methods in `time.Time` (see above) and is by design very simple. If you're looking for a more advanced time mocking library, have a look at https://github.com/benbjohnson/clock.
