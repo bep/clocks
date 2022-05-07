@@ -11,6 +11,13 @@ type Clock interface {
 	Until(t time.Time) time.Duration
 }
 
+// Start creates a new Clock starting at t.
+func Start(t time.Time) Clock {
+	return &clock{
+		offset: t.Sub(time.Now()),
+	}
+}
+
 type clock struct {
 	offset time.Duration
 }
@@ -29,11 +36,25 @@ func (c *clock) Since(t time.Time) time.Duration {
 // Until returns the duration until t.
 func (c *clock) Until(t time.Time) time.Duration {
 	return t.Sub(c.Now())
+
 }
 
-// Start creates a new Clock starting at t.
-func Start(t time.Time) Clock {
-	return &clock{
-		offset: t.Sub(time.Now()),
-	}
+// SystemClock is a Clock that uses the system clock, meaning it just delegates to time.Now() etc.
+func System() Clock {
+	return &systemClock{}
+}
+
+type systemClock struct {
+}
+
+func (c *systemClock) Now() time.Time {
+	return time.Now()
+}
+
+func (c *systemClock) Since(t time.Time) time.Duration {
+	return time.Since(t)
+}
+
+func (c *systemClock) Until(t time.Time) time.Duration {
+	return time.Until(t)
 }

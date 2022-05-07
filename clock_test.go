@@ -62,6 +62,15 @@ func TestClock(t *testing.T) {
 
 }
 
+func TestSystemClock(t *testing.T) {
+	c := qt.New(t)
+
+	c.Assert(toString(System().Now()), qt.Equals, toString(time.Now()))
+	c.Assert(System().Since(time.Now().Add(-10*time.Hour)), durationEq, time.Since(time.Now().Add(-10*time.Hour)))
+	c.Assert(System().Until(time.Now().Add(10*time.Hour)), durationEq, time.Until(time.Now().Add(10*time.Hour)))
+
+}
+
 func toString(t time.Time) string {
 	return t.UTC().Format(timeLayout)
 }
