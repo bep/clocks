@@ -46,7 +46,6 @@ func TestClock(t *testing.T) {
 
 		clock := Start(time.Now().Add(5010 * time.Millisecond))
 		c.Assert(clock.Offset(), durationEq, time.Duration(5*time.Second))
-
 	})
 
 	c.Run("Since", func(c *qt.C) {
@@ -67,7 +66,6 @@ func TestClock(t *testing.T) {
 		then := clock.Now().Add(3010 * time.Millisecond)
 		c.Assert(clock.Until(then), durationEq, time.Duration(3*time.Second))
 	})
-
 }
 
 func TestSystemClock(t *testing.T) {
@@ -79,7 +77,6 @@ func TestSystemClock(t *testing.T) {
 	c.Assert(System().Since(time.Now().Add(-10*time.Hour)), durationEq, time.Since(time.Now().Add(-10*time.Hour)))
 	c.Assert(System().Until(time.Now().Add(10*time.Hour)), durationEq, time.Until(time.Now().Add(10*time.Hour)))
 	c.Assert(System().Offset(), qt.Equals, time.Duration(0))
-
 }
 
 func toString(t time.Time) string {

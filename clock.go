@@ -33,7 +33,6 @@ func (c *clock) Now() time.Time {
 // Since returns the time elapsed since t.
 func (c *clock) Since(t time.Time) time.Duration {
 	return c.Now().Sub(t)
-
 }
 
 // Until returns the duration until t.
@@ -54,8 +53,7 @@ func System() Clock {
 	return goClock
 }
 
-type systemClock struct {
-}
+type systemClock struct{}
 
 func (c *systemClock) Now() time.Time {
 	return time.Now()
