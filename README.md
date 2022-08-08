@@ -1,6 +1,6 @@
-[![Tests on Linux, MacOS and Windows](https://github.com/bep/clock/workflows/Test/badge.svg)](https://github.com/bep/clock/actions?query=workflow:Test)
-[![Go Report Card](https://goreportcard.com/badge/github.com/bep/clock)](https://goreportcard.com/report/github.com/bep/clock)
-[![GoDoc](https://godoc.org/github.com/bep/clock?status.svg)](https://godoc.org/github.com/bep/clock)
+[![Tests on Linux, MacOS and Windows](https://github.com/bep/clocks/workflows/Test/badge.svg)](https://github.com/bep/clocks/actions?query=workflow:Test)
+[![Go Report Card](https://goreportcard.com/badge/github.com/bep/clocks)](https://goreportcard.com/report/github.com/bep/clocks)
+[![GoDoc](https://godoc.org/github.com/bep/clocks?status.svg)](https://godoc.org/github.com/bep/clocks)
 
 This package provides a _ticking clock_ that allows you to set the start time. It also provides a system clock, both implementing this interface:
 

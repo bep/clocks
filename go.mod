@@ -1,4 +1,4 @@
-module github.com/bep/clock
+module github.com/bep/clocks
 
 go 1.18
 
