@@ -1,6 +1,7 @@
 package clock
 
 import (
+	"math"
 	"testing"
 	"time"
 
@@ -12,7 +13,9 @@ const timeLayout = "2006-01-02-15:04:05"
 
 var durationEq = qt.CmpEquals(
 	cmp.Comparer(func(x, y time.Duration) bool {
-		return x.Truncate(1*time.Second) == y.Truncate(1*time.Second)
+		xs := math.RoundToEven(float64(x) / float64(time.Second))
+		ys := math.RoundToEven(float64(y) / float64(time.Second))
+		return xs == ys
 	}),
 )
 
@@ -77,6 +80,22 @@ func TestSystemClock(t *testing.T) {
 	c.Assert(System().Since(time.Now().Add(-10*time.Hour)), durationEq, time.Since(time.Now().Add(-10*time.Hour)))
 	c.Assert(System().Until(time.Now().Add(10*time.Hour)), durationEq, time.Until(time.Now().Add(10*time.Hour)))
 	c.Assert(System().Offset(), qt.Equals, time.Duration(0))
+}
+
+func TestFixedClock(t *testing.T) {
+	t.Parallel()
+
+	c := qt.New(t)
+
+	fixed := Fixed(TimeCupFinalNorway1976)
+	fiveSecondsLater := Fixed(TimeCupFinalNorway1976.Add(5 * time.Second))
+	fiveSecondsBefore := Fixed(TimeCupFinalNorway1976.Add(-5 * time.Second))
+
+	c.Assert(toString(fixed.Now()), qt.Equals, toString(TimeCupFinalNorway1976))
+	c.Assert(fixed.Offset() > 0, qt.IsTrue)
+	c.Assert(fixed.Since(fiveSecondsBefore.Now()), durationEq, time.Duration(5*time.Second))
+	c.Assert(fixed.Until(fiveSecondsLater.Now()), durationEq, time.Duration(5*time.Second))
+
 }
 
 func toString(t time.Time) string {
